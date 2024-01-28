@@ -10,11 +10,12 @@ namespace konsi_api.Services.HttpServices
     {
         private readonly IHttpClientFactory _factory;
         private readonly IBenefitsCache _cache;
-
-        public AuthHttpService(IHttpClientFactory factory, IBenefitsCache cache)
+        private readonly IConfiguration _configuration;
+        public AuthHttpService(IHttpClientFactory factory, IBenefitsCache cache, IConfiguration configuration)
         {
             _factory = factory;
             _cache = cache;
+            _configuration = configuration;
         }
 
         public async Task<AuthResponse?> GenerateToken()
@@ -26,7 +27,9 @@ namespace konsi_api.Services.HttpServices
                 var client = _factory.CreateClient("konsi");
 
                 var bodyContent = new StringContent(
-                    JsonSerializer.Serialize(new { username = "test@konsi.com.br", password = "Test@Konsi2023*" }),
+                    JsonSerializer.Serialize(new { username = _configuration.GetValue<string>("KonsiApiSettings:Username"),
+                        password = _configuration.GetValue<string>("KonsiApiSettings:Password")
+                    }),
                     Encoding.UTF8,
                     Application.Json
                 );
