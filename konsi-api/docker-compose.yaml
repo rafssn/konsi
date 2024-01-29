@@ -10,6 +10,8 @@
       - "8080:8080"
     volumes:
       - .:/code
+    depends_on:
+      - elasticsearch
     networks:
       - shared
   rabbitmq:
@@ -28,6 +30,7 @@
       - RABBITMQ_DEFAULT_PASS=passw123
     restart: always
   redis:
+    container_name: rediscache
     image: redis:latest
     command: redis-server --requirepass pass
     ports:

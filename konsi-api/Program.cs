@@ -5,7 +5,6 @@ using konsi_api.Services.HttpServices;
 using konsi_api.Services.Messaging;
 using konsi_api.Services.Messaging.Consumers;
 using konsi_api.Services.Messaging.Publishers;
-using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 

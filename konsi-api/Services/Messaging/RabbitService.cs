@@ -16,7 +16,7 @@ namespace konsi_api.Services.Messaging
         {
             var connectionFactory = new ConnectionFactory
             {
-                HostName = "localhost",
+                HostName = "rabbitmq",
                 UserName = "admin",
                 Password = "passw123",
             };

@@ -12,7 +12,7 @@ namespace konsi_api.Services.ElasticServuces
 
         public ElasticService()
         {
-            _elasticClient = new ElasticsearchClient(new Uri("http://localhost:9200"));
+            _elasticClient = new ElasticsearchClient(new Uri("http://elasticsearch:9200"));
         }
 
         public async Task IndexBeneficiary(Beneficiary beneficiary)
