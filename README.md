@@ -1,4 +1,4 @@
-# konsi
+# Teste técnico - konsi
 
 A API foi produzida com o .NET 8.0 e utilizando frameworks bem conhecidos.
 Seguindo a ideia solicitada, parti de uma solução bem simples, com poucas dependencias e projetos acoplados. Apesar de muitos designs poderem ser aplicados aqui, a minha opinião é que cada cenário requer uma abstração que valha sua complexidade. O desafio apesar de requerer algumas conexões e provisionamentos de infra, não criou a necessidade de criar-se vários projetos para continuar tendo uma boa visibilidade e organização.
@@ -10,7 +10,7 @@ Alguns pontos da aplicação podem e devem ser melhorados para segurança e tend
 
 Para melhora de testes, toda a aplicação e suas dependências estão configuradas em um Docker Compose.
 
-### Para executar a aplicação, execute o código:
+### Para executar a aplicação, execute o código no projeto "konsi-api":
 ```bash
   docker-compose up -d
 ```
