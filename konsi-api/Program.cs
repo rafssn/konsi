@@ -19,6 +19,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<IElasticService, ElasticService>();
+
 builder.Services.AddHostedService<ConsumerCpfService>();
 
 builder.Services.AddSingleton<IBenefitsCache, BenefitsCache>();
@@ -26,7 +28,6 @@ builder.Services.AddSingleton<IAuthHttpService, AuthHttpService>();
 builder.Services.AddSingleton<IBenefitsHttpService, BenefitsHttpService>();
 builder.Services.AddSingleton<IPublishCpfService, PublishCpfService>();
 builder.Services.AddSingleton<IRabbitService, RabbitService>();
-builder.Services.AddSingleton<IElasticService, ElasticService>();
 
 builder.Services.AddHttpClient("konsi", (serviceProvider, client) =>
 {

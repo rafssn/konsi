@@ -8,18 +8,20 @@ namespace konsi_api.Services.Messaging
     {
         private readonly IConnection _connection;
         private readonly IModel _channel;
-        public readonly string _queue = "Cpf-Searched";
-        private const string _exchange = "input-data-service";
-
-
-        public RabbitService()
+        private readonly string _queue;
+        private readonly string _exchange;
+        
+        public RabbitService(IConfiguration configuration)
         {
             var connectionFactory = new ConnectionFactory
             {
-                HostName = "rabbitmq",
-                UserName = "admin",
-                Password = "passw123",
+                HostName = configuration.GetValue<string>("RabbitMQ:HostName"),
+                UserName = configuration.GetValue<string>("RabbitMQ:UserName"),
+                Password = configuration.GetValue<string>("RabbitMQ:Password"),
             };
+
+            _queue = configuration.GetValue<string>("RabbitMQ:Queue");
+            _exchange = configuration.GetValue<string>("RabbitMQ:Queue");
 
             connectionFactory.DispatchConsumersAsync = true;
             _connection = connectionFactory.CreateConnection("customers-service-publisher");

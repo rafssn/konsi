@@ -7,11 +7,11 @@ namespace konsi_api.Services.Messaging.Publishers
 {
     public class PublishCpfService : IPublishCpfService
     {
-        private readonly RabbitService _rabbitService;
+        private readonly IRabbitService _rabbitService;
         private const string Exchange = "input-data-service";
 
-        public PublishCpfService() {
-            _rabbitService = new RabbitService();    
+        public PublishCpfService(IRabbitService rabbitService) {
+            _rabbitService = rabbitService;
         }
 
         public void Publish(CpfSearchedEvent @event)

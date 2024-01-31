@@ -36,8 +36,6 @@ namespace konsi_api.Services.Messaging.Consumers
                 var contentString = Encoding.UTF8.GetString(contentArray);
                 var message = JsonSerializer.Deserialize<CpfSearchedEvent>(contentString);
 
-                Console.WriteLine($"Message CustomerCreatedEvent received");
-
                 var cachedBenefits = await _benefitsCache.GetAsync(message.Cpf);
 
                 if (!cachedBenefits.Any())
@@ -54,6 +52,8 @@ namespace konsi_api.Services.Messaging.Consumers
 
                 channel.BasicAck(eventArgs.DeliveryTag, false);
             };
+
+            Console.WriteLine($"Message processed");
 
             channel.BasicConsume(_queue, false, consumer);
 

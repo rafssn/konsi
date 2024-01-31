@@ -1,19 +1,4 @@
 ﻿services:
-  web:
-    build: .
-    container_name: kapi
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:8081;http://+:8080
-      - DOTNET_RUNNING_IN_CONTAINER=true
-    ports:
-      - "8080:8080"
-    volumes:
-      - .:/code
-    depends_on:
-      - elasticsearch
-    networks:
-      - shared
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: 'rabbitmq'
@@ -43,12 +28,27 @@
     volumes:
       - elastic-volume:/usr/share/elasticsearch/data
     environment:
-      - xpack.monitoring.enabled=true
+      - xpack.monitoring.enabled=false
       - xpack.watcher.enabled=false
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - discovery.type=single-node
       - ELASTICSEARCH_USERNAME=admin
       - ELASTICSEARCH_PASSWORD=pass
+    networks:
+      - shared
+  web:
+    build: .
+    container_name: kapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8081;http://+:8080
+      - DOTNET_RUNNING_IN_CONTAINER=true
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/code
+    depends_on:
+      - elasticsearch
     networks:
       - shared
 

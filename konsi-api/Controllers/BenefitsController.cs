@@ -20,22 +20,30 @@ namespace konsi_api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Benefit>>> GetBenefits([FromQuery][Required][MaxLength(14)][MinLength(11)] string cpf)
+        public async Task<ActionResult<IEnumerable<Benefit>>> GetBenefits([FromQuery][Required] string cpf)
         {
-            var result = await _elasticService.GetBeneficiaryByCpf(cpf);
+            var personIdentification = new PersonIdentification(cpf);
+
+            if (personIdentification.IsValid())
+                return BadRequest("Invalid 'CPF'");
+
+            var result = await _elasticService.GetBeneficiaryByCpf(personIdentification.GetCpf());
 
             if(result is not null)
-            {
                 return Ok(result.Benefits);
-            }
 
             return NotFound();
         }
 
         [HttpPost]
-        public ActionResult InputBenefits([FromQuery][Required][MaxLength(14)][MinLength(11)] string cpf)
+        public ActionResult InputBenefits([FromQuery][Required] string cpf)
         {
-            var @event = new CpfSearchedEvent(cpf);
+            var personIdentification = new PersonIdentification(cpf);
+
+            if (personIdentification.IsValid())
+                return BadRequest("Invalid 'CPF'");
+
+            var @event = new CpfSearchedEvent(personIdentification.GetCpf());
 
             _publishCpfService.Publish(@event);
 
